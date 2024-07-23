@@ -6,7 +6,7 @@ Memory forensics is a critical aspect of cybersecurity that involves analyzing v
 
 `Category`: Digital Forensics and Incident Response   
 `Sub-Category`: Linux Forensics   
-`Level`: Beginner   
+`Level`: Intermediate   
 
 ## Pre-requisites
 
