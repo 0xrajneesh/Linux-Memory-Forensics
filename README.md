@@ -18,8 +18,14 @@ Memory forensics is a critical aspect of cybersecurity that involves analyzing v
 
 ### Lab Setup
 
-1. Install a Linux distribution (e.g., Ubuntu, Fedora) on your system or set up a virtual machine using VirtualBox or VMware.
-2. Ensure you have sudo access to install necessary tools and perform analysis.
+1. Install VirtualBox/VMware: Download and install VirtualBox or VMware on your host machine.
+2. Create a Linux VM: Install a Linux distribution (e.g., Ubuntu) on your virtual machine.
+3. Install LiME:
+ - Clone the LiME repository: git clone https://github.com/504ensicsLabs/LiME.git
+ - Compile LiME: Navigate to the LiME directory and run make.
+4. Install Volatility:
+ - Clone the Volatility repository: git clone https://github.com/volatilityfoundation/volatility.git
+ - Install dependencies: Follow the instructions in the Volatility documentation.
 
 ### Tools
 
@@ -33,7 +39,21 @@ Memory forensics is a critical aspect of cybersecurity that involves analyzing v
 
 ## Exercises
 
-### Exercise 1: Capturing Memory
+### Exercise 1: Capturing Memory with LiME
+Objective: Learn how to capture the memory of a Linux system using LiME.
+
+Steps:
+
+Load LiME Module:
+Command: sudo insmod lime.ko "path=/memory_dump.lime format=lime"
+Verify Memory Dump:
+Command: ls -lh /memory_dump.lime
+Expected Output: A memory dump file named memory_dump.lime should be present in the root directory.
+Unload LiME Module:
+Command: sudo rmmod lime
+Expected Output: LiME module should be successfully removed from the kernel.
+
+### Exercise 2: Capturing Memory
 
 Objective: Learn how to capture the memory of a Linux system for forensic analysis to ensure volatile data is preserved for examination.
 
@@ -57,7 +77,7 @@ ls -lh /root/memory_dump.mem
 ```
 Expected Output: File listing showing the size and location of the memory dump.
 
-### Exercise 2: Setting Up Volatility for Memory Analysis
+### Exercise 3: Setting Up Volatility for Memory Analysis
 Objective: Install and set up Volatility, a memory forensics framework, to analyze the captured memory dump.
 
 Step1: Install Volatility
@@ -80,7 +100,7 @@ volatility -f /root/memory_dump.mem imageinfo
 ```
 Expected Output: Suggested profile(s) for the memory dump.
 
-### Exercise 3: Analyzing Running Processes
+### Exercise 4: Analyzing Running Processes
 Objective: Analyze the running processes in the memory dump to identify suspicious or malicious activities.
 
 Step1: List running processes
@@ -103,7 +123,7 @@ ps aux
 ```
 Expected Output: Current running processes on the live system for comparison.
 
-### Exercise 4: Investigating Network Connections
+### Exercise 5: Investigating Network Connections
 Objective: Examine network connections in the memory dump to uncover active and potentially malicious network activities.
 
 Step1: List network connections:
@@ -127,7 +147,7 @@ volatility -f /root/memory_dump.mem --profile=LinuxUbuntu16_04x64 connscan
 ```
 Expected Output: Detailed information about network connections, including potential hidden or suspicious connections.
 
-### Exercise 5: Extracting and Analyzing Strings
+### Exercise 6: Extracting and Analyzing Strings
 Objective: Extract and analyze strings from the memory dump to find indicators of compromise and other relevant information.
 
 Step1: Extract strings from memory dump:
