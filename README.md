@@ -44,13 +44,20 @@ Objective: Learn how to capture the memory of a Linux system using LiME.
 
 Steps:
 
-Load LiME Module:
-Command: sudo insmod lime.ko "path=/memory_dump.lime format=lime"
-Verify Memory Dump:
-Command: ls -lh /memory_dump.lime
+1. Load LiME Module:
+```
+sudo insmod lime.ko "path=/memory_dump.lime format=lime"
+```
+2. Verify Memory Dump:
+```
+ls -lh /memory_dump.lime
+```
 Expected Output: A memory dump file named memory_dump.lime should be present in the root directory.
-Unload LiME Module:
-Command: sudo rmmod lime
+
+3. Unload LiME Module:
+```
+sudo rmmod lime
+```
 Expected Output: LiME module should be successfully removed from the kernel.
 
 ### Exercise 2: Capturing Memory
