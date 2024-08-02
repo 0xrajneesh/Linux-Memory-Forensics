@@ -30,7 +30,7 @@ Memory forensics is a critical aspect of cybersecurity that involves analyzing v
 ### Tools
 
 - `volatility` - Memory forensics framework
-- `dd` - Utility for copying and converting files
+- `avml` - Utility for memory aquisition developed by Microsoft
 - `ps` - Report a snapshot of current processes
 - `netstat` - Network statistics
 - `grep` - Search through text
@@ -60,52 +60,91 @@ sudo rmmod lime
 ```
 Expected Output: LiME module should be successfully removed from the kernel.
 
-### Exercise 2: Capturing Memory
+### Exercise 2: Capturing Memory using AVML
 
-Objective: Learn how to capture the memory of a Linux system for forensic analysis to ensure volatile data is preserved for examination.
+Step1:**: Download AVML** 
 
-Step1:  **Install `dd` if not already installed:**
-```bash
-   sudo apt-get install coreutils
+Download the executable from https://github.com/microsoft/avml/releases
+
+Step2: Make it executable
+
 ```
-Expected Output: dd and other core utilities installed on the system.
-
-Step2: Capture the memory using dd:
-
-```bash
-sudo dd if=/dev/mem of=/root/memory_dump.mem bs=1M
+chmod +x ./kvml
 ```
-Expected Output: Memory dump saved to /root/memory_dump.mem.
 
-Step3: Verify the memory dump file:
+Step3: Create a Memory dump
 
-```bash
-ls -lh /root/memory_dump.mem
 ```
-Expected Output: File listing showing the size and location of the memory dump.
+sudo ./kvml rajneesh.mem
+```
+
+Step4: Test 
+
+```markdown
+strings rajneesh.mem | grep "mozilla"
+```
 
 ### Exercise 3: Setting Up Volatility for Memory Analysis
 Objective: Install and set up Volatility, a memory forensics framework, to analyze the captured memory dump.
 
-Step1: Install Volatility
+#### Step 1: Update and Upgrade Your System
+First, ensure your system is up to date.
 ```bash
-sudo apt-get install volatility
+sudo apt update
+sudo apt upgrade -y
 ```
-Expected Output: Volatility installed on the system.
 
-Step2: Verify Volatility installation
+#### Step 2: Install Python 3
+Volatility 3 requires Python 3.
 
-```bash
-volatility --help
-```
-Expected Output: Help menu of Volatility, confirming successful installation.
-
-Step3: Identify the profile of the memory dump
+Install Python 3:
 
 ```bash
-volatility -f /root/memory_dump.mem imageinfo
+sudo apt install python3 python3-pip python3-dev -y
 ```
-Expected Output: Suggested profile(s) for the memory dump.
+Verify Python Installation:
+
+```bash
+python3 --version
+```
+#### Step 3: Install Dependencies
+Install the required packages for Volatility 3.
+
+Install Required Packages:
+```bash
+sudo apt install build-essential git -y
+sudo pip3 install capstone
+sudo pip3 install distorm3
+sudo pip3 install yara-python
+sudo pip3 install pefile
+sudo pip3 install pytz
+sudo pip3 install jsonschema
+```
+#### Step 4: Download Volatility 3
+Clone the Repository:
+
+```bash
+git clone https://github.com/volatilityfoundation/volatility3.git
+```
+Navigate to the Volatility 3 Directory:
+
+```bash
+cd volatility3
+```
+#### Step 5: Set Up Volatility 3
+Run Volatility 3:
+```bash
+python3 vol.py
+```
+This should display Volatility 3’s help message.
+#### Step 6: Verify the Installation
+To ensure Volatility 3 is working correctly, you can run a basic command:
+
+```bash
+python3 vol.py -h
+```
+This command should display the help message with available commands and options.
+
 
 ### Exercise 4: Analyzing Running Processes
 Objective: Analyze the running processes in the memory dump to identify suspicious or malicious activities.
